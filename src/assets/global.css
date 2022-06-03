@@ -1,0 +1,9 @@
+.component-ghost {
+    background: rgb(0, 0, 0, 0.125) !important;
+    margin-bottom: 0.5rem !important;
+    width: 100%;
+}
+
+.component-ghost * {
+    display: none !important;
+}
