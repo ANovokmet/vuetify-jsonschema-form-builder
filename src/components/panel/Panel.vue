@@ -10,6 +10,8 @@
         group="components"
         class="form-builder__form"
         ghost-class="component-ghost"
+        drag-class="component-dragging"
+        force-fallback="true"
         @change="onDragEnd($event, settings.components)"
       >
         <template v-for="child in settings.components">
@@ -59,5 +61,12 @@ export default Vue.extend({
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
+}
+
+.form-builder__form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 </style>

@@ -30,4 +30,8 @@ export default Vue.extend({
   display: flex;
   align-items: center;
 }
+
+.component__title {
+  margin-left: 16px;
+}
 </style>

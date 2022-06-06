@@ -3,7 +3,7 @@ import DefaultField from '../common/DefaultField.vue';
 
 export default {
     title: 'Text field',
-    icon: 'mdi-text',
+    icon: 'title',
     settings: {
         type: 'textfield',
         key: 'textfield',

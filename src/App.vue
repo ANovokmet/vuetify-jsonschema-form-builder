@@ -27,6 +27,10 @@ import '@koumoul/vjsf/lib/VJsf.css';
 import '@koumoul/vjsf/lib/deps/third-party.js';
 import FormBuilder from './components/FormBuilder.vue';
 
+// setInterval(() => {
+//   debugger;
+// }, 5000);
+
 export default {
   name: 'App',
   components: { VJsf, FormBuilder },

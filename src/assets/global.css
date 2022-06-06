@@ -2,8 +2,21 @@
     background: rgb(0, 0, 0, 0.125) !important;
     margin-bottom: 0.5rem !important;
     width: 100%;
+
+        
+    background: rgba(80, 83, 222, 0.08) !important;
+    border: 1px dashed #5053DE  !important;
+    border-radius: 4px;
+
+    height: 42px;
+    margin: 0 !important;
 }
 
 .component-ghost * {
     display: none !important;
+}
+
+.component-dragging {
+    background-color: white !important;
+    opacity: 1 !important;
 }

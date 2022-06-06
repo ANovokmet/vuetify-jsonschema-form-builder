@@ -3,12 +3,12 @@
     class="component"
     :cols="settings.xCols"
   >
-    <component class="component__title" :is="componentDefinition.template" :settings="settings" :icon="componentDefinition.icon"></component>
+    <component class="component__content" :is="componentDefinition.template" :settings="settings" :icon="componentDefinition.icon"></component>
 
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
-          <v-icon>mdi-pencil</v-icon>
+          <v-icon>edit</v-icon>
         </v-btn>
       </template>
 
@@ -25,7 +25,7 @@
       </v-card>
     </v-dialog>
 
-    <v-btn icon @click="$emit('remove', settings)"><v-icon>mdi-close</v-icon></v-btn>
+    <v-btn icon @click="$emit('remove', settings)"><v-icon>close</v-icon></v-btn>
   </v-col>
 </template>
 
@@ -59,12 +59,16 @@ export default Vue.extend({
   display: flex;
   align-items: center;
 
-  padding: 0.75rem 1.25rem;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  /* border: 1px solid rgba(0, 0, 0, 0.125); */
+  /* margin-bottom: 0.5rem; */
+
+  background: white;
+  border: 1px solid #DFE2E9;
+  border-radius: 4px;
 }
 
-.component__title {
-  flex: 1 0 auto;
+.component__content {
+  flex: 1 1 auto;
 }
 </style>

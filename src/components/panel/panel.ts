@@ -3,7 +3,7 @@ import Panel from './Panel.vue';
 
 export default {
     title: 'Panel',
-    icon: 'mdi-grid',
+    icon: 'table_rows',
     settings: {
         type: 'panel',
         key: 'panel',

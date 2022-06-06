@@ -3,7 +3,7 @@ import DefaultField from '../common/DefaultField.vue';
 
 export default {
     title: 'Date',
-    icon: 'mdi-calendar',
+    icon: 'calendar_today',
     settings: {
         type: 'date',
         key: 'date',
