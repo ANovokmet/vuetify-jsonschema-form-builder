@@ -12,6 +12,7 @@
 import Vue, { PropType } from 'vue'
 
 export default Vue.extend({
+  name: 'DefaultOptions',
   props: {
     options: {
       type: Object as PropType<any>,

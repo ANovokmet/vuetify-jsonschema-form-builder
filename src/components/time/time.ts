@@ -2,12 +2,12 @@ import DefaultOptions from '../common/DefaultOptions.vue';
 import DefaultField from '../common/DefaultField.vue';
 
 export default {
-    title: 'Date',
-    icon: 'calendar_today',
+    title: 'Time',
+    icon: 'schedule',
     settings: {
-        type: 'date',
-        key: 'date',
-        label: 'Date',
+        type: 'time',
+        key: 'time',
+        label: 'Time',
         xCols: 12,
     },
     optionsTemplate: DefaultOptions,
@@ -15,7 +15,7 @@ export default {
     buildSchema: (settings: any, parent: any) => {
         parent.properties[settings.key] = {
             type: 'string',
-            format: 'date',
+            format: 'time',
             title: settings.label,
             'x-cols': +settings.xCols
         }

@@ -1,4 +1,4 @@
-import PanelOptions from './PanelOptions.vue';
+import DefaultOptions from '../common/DefaultOptions.vue';
 import Panel from './Panel.vue';
 
 export default {
@@ -11,7 +11,7 @@ export default {
         xCols: 12,
         components: []
     },
-    optionsTemplate: PanelOptions,
+    optionsTemplate: DefaultOptions,
     template: Panel,
     buildSchema: (settings: any, parent: any, builder: any) => {
 

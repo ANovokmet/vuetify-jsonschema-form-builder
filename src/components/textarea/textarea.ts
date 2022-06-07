@@ -2,12 +2,12 @@ import DefaultOptions from '../common/DefaultOptions.vue';
 import DefaultField from '../common/DefaultField.vue';
 
 export default {
-    title: 'Date',
-    icon: 'calendar_today',
+    title: 'Long text',
+    icon: 'text_fields',
     settings: {
-        type: 'date',
-        key: 'date',
-        label: 'Date',
+        type: 'textarea',
+        key: 'textarea',
+        label: 'Long text',
         xCols: 12,
     },
     optionsTemplate: DefaultOptions,
@@ -15,8 +15,8 @@ export default {
     buildSchema: (settings: any, parent: any) => {
         parent.properties[settings.key] = {
             type: 'string',
-            format: 'date',
             title: settings.label,
+            'x-display': "textarea",
             'x-cols': +settings.xCols
         }
     }

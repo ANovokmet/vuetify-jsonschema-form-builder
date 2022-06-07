@@ -2,30 +2,17 @@
   <v-col
     class="component"
     :cols="settings.xCols"
+    @click.stop="$emit('select', componentDefinition)"
   >
-    <component class="component__content" :is="componentDefinition.template" :settings="settings" :icon="componentDefinition.icon"></component>
-
-    <v-dialog v-model="dialog" width="500">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn icon v-bind="attrs" v-on="on">
-          <v-icon>edit</v-icon>
-        </v-btn>
-      </template>
-
-      <v-card>
-        <v-card-title> Options </v-card-title>
-        <v-container>
-          <component :is="componentDefinition.optionsTemplate" :options="settings"></component>
-        </v-container>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn text @click="dialog = false"> Close </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <v-btn icon @click="$emit('remove', settings)"><v-icon>close</v-icon></v-btn>
+    <component
+      class="component__content"
+      :is="componentDefinition.template"
+      :settings="settings"
+      :icon="componentDefinition.icon"
+    ></component>
+    <v-btn icon @click.stop="$emit('remove', settings)">
+      <v-icon>close</v-icon>
+    </v-btn>
   </v-col>
 </template>
 
@@ -41,16 +28,16 @@ export default Vue.extend({
       required: true,
     }
   },
+  methods: {
+    onClick() {
+      console.log(this.componentDefinition);
+    }
+  },
   computed: {
     componentDefinition(): any {
       return getComponent(this.settings.type);
     }
-  },
-  data() {
-    return {
-      dialog: false
-    }
-  },
+  }
 })
 </script>
 
@@ -64,7 +51,7 @@ export default Vue.extend({
   /* margin-bottom: 0.5rem; */
 
   background: white;
-  border: 1px solid #DFE2E9;
+  border: 1px solid #dfe2e9;
   border-radius: 4px;
 }
 

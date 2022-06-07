@@ -19,4 +19,5 @@
 .component-dragging {
     background-color: white !important;
     opacity: 1 !important;
+    height: auto !important;
 }

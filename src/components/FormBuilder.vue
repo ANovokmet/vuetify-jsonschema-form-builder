@@ -2,24 +2,7 @@
   <v-row>
     <v-col cols="8" style="background: #f4f5f8">
       <div class="form-builder__form-container">
-        <draggable
-          v-model="config"
-          group="components"
-          class="form-builder__form"
-          ghost-class="component-ghost"
-          drag-class="component-dragging"
-          force-fallback="true"
-          @change="onDragEnd($event, config)"
-        >
-          <template v-for="child in config">
-            <form-builder-component
-              :key="child.id"
-              :settings="child"
-              @remove="onRemove(child, config)"
-            ></form-builder-component>
-          </template>
-          <draggable-empty></draggable-empty>
-        </draggable>
+        <form-builder-form :config.sync="config"></form-builder-form>
       </div>
     </v-col>
     <v-col cols="4" style="padding: 0">
@@ -30,23 +13,16 @@
       </v-tabs>
       <v-tabs-items v-model="tab">
         <v-tab-item class="form-builder__components">
-          <draggable
-            v-model="components"
-            :sort="false"
-            :group="{ name: 'components', pull: 'clone', put: false }"
-            :clone="cloneObject"
-            drag-class="component-dragging"
-            force-fallback="true"
-            class="list"
-          >
-            <div v-for="(element, i) in components" class="list-item" :key="i">
-              <v-icon>{{ element.icon }}</v-icon>
-              <div class="list-item__title">{{ element.title }}</div>
-            </div>
-          </draggable>
+          <form-builder-components></form-builder-components>
         </v-tab-item>
-        <v-tab-item class="form-builder__options">options</v-tab-item>
-        <v-tab-item>code</v-tab-item>
+        <v-tab-item class="form-builder__options">
+          <form-builder-options></form-builder-options>
+        </v-tab-item>
+        <v-tab-item>
+          <pre>
+            {{ schema }}
+          </pre>
+        </v-tab-item>
       </v-tabs-items>
     </v-col>
   </v-row>
@@ -54,32 +30,39 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
-import draggable from 'vuedraggable';
 import "../assets/global.css";
 import { cloneDeep } from 'lodash-es';
 
-import FormBuilderComponent from './FormBuilderComponent.vue';
-import DraggableEmpty from './DraggableEmpty.vue';
+import FormBuilderForm from './FormBuilderForm.vue';
+import FormBuilderOptions from './FormBuilderOptions.vue';
+import FormBuilderComponents from './FormBuilderComponents.vue';
 import { SchemaBuilder } from './schema-builder';
 import { SchemaParser } from './schema-parser';
-import onDndEndMixin from '../mixins/onDndEnd';
-import onRemoveMixin from '../mixins/onRemove';
 
 import { components, registerComponent } from './components';
 
 import textfieldComponent from './textfield/textfield';
 import panelComponent from './panel/panel';
 import dateComponent from './date/date';
+import textareaComponent from './textarea/textarea';
+import timeComponent from './time/time';
+import selectComponent from './select/select';
+import { store } from '../store';
 
 registerComponent('textfield', textfieldComponent);
-registerComponent('panel', panelComponent);
+registerComponent('textarea', textareaComponent);
 registerComponent('date', dateComponent);
+registerComponent('time', timeComponent);
+registerComponent('select', selectComponent);
+registerComponent('panel', panelComponent);
 
 export default Vue.extend({
   name: 'FormBuilder',
-  components: { draggable, FormBuilderComponent, DraggableEmpty },
-
-  mixins: [onDndEndMixin, onRemoveMixin],
+  components: {
+    FormBuilderForm,
+    FormBuilderOptions,
+    FormBuilderComponents
+  },
 
   props: {
     schema: {
@@ -92,6 +75,16 @@ export default Vue.extend({
     cloneObject(original: any) {
       return cloneDeep(original.settings);
     },
+    onSelected(settings: any, definition: any) {
+      store.selectedSettings = settings;
+      store.selectedDefinition = definition;
+    }
+  },
+
+  created() {
+    const parser = new SchemaParser();
+    parser.visit(this.schema);
+    this.config = parser.config;
   },
 
   watch: {
@@ -116,6 +109,15 @@ export default Vue.extend({
     }
   },
 
+  computed: {
+    selectedDefinition() {
+      return store.selectedDefinition;
+    },
+    selectedSettings() {
+      return store.selectedSettings;
+    }
+  },
+
   data() {
     return {
       tab: {},
@@ -137,7 +139,7 @@ export default Vue.extend({
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 8px;
+  row-gap: 8px;
 }
 
 .form-builder__components {
@@ -148,27 +150,5 @@ export default Vue.extend({
 
 .form-builder__options {
   padding: 0.75rem;
-}
-
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.list-item {
-  position: relative;
-  display: block;
-  padding: 0.5rem 1rem;
-
-  background: #f3f3f3;
-  border: 1px solid #dfe2e9;
-  border-radius: 4px;
-
-  display: flex;
-}
-
-.list-item .v-icon {
-  margin-right: 16px;
 }
 </style>

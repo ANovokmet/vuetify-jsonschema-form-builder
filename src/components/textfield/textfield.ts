@@ -1,16 +1,16 @@
-import TextFieldOptions from './TextfieldOptions.vue';
+import DefaultOptions from '../common/DefaultOptions.vue';
 import DefaultField from '../common/DefaultField.vue';
 
 export default {
-    title: 'Text field',
-    icon: 'title',
+    title: 'Short text',
+    icon: 'text_fields',
     settings: {
         type: 'textfield',
         key: 'textfield',
-        label: 'Text field',
+        label: 'Short text',
         xCols: 12,
     },
-    optionsTemplate: TextFieldOptions,
+    optionsTemplate: DefaultOptions,
     template: DefaultField,
     buildSchema: (settings: any, parent: any) => {
         parent.properties[settings.key] = {

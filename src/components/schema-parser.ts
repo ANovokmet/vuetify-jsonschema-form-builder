@@ -1,4 +1,4 @@
-export class SchemaParser{
+export class SchemaParser {
     //   {
     //     type: 'object',
     //     properties: {
@@ -15,7 +15,7 @@ export class SchemaParser{
     config = [];
 
     visit(schema: any) {
-        if(schema.type === 'object') {
+        if (schema.type === 'object') {
             this.visitObject(schema, this.config);
         }
     }
@@ -27,23 +27,37 @@ export class SchemaParser{
             this.visitProperty(property, key, config);
         }
 
-        if(schema.title != null) {
+        if (schema.title != null) {
             // console.log(schema);
         }
     }
 
     visitProperty(property: any, key: string, config: any[]) {
-        if(property.type === 'string') {
+        if (property.type === 'string') {
             this.visitStringProperty(property, key, config);
-        } else if(property.type === 'object') {
+        } else if (property.type === 'object') {
             this.visitObjectProperty(property, key, config);
         }
     }
 
     visitStringProperty(property: any, key: string, config: any[]) {
-        if(property.format === 'date') {
+        if (property.format === 'date') {
             config.push({
                 type: 'date',
+                key: key,
+                label: property.title ?? key,
+                xCols: property['x-cols'] ?? 12,
+            });
+        } else if (property.format === 'time') {
+            config.push({
+                type: 'time',
+                key: key,
+                label: property.title ?? key,
+                xCols: property['x-cols'] ?? 12,
+            });
+        } else if (property['x-display'] === 'textarea') {
+            config.push({
+                type: 'textarea',
                 key: key,
                 label: property.title ?? key,
                 xCols: property['x-cols'] ?? 12,

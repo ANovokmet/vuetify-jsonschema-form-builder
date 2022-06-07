@@ -19,6 +19,7 @@
             :key="child.id"
             :settings="child"
             @remove="onRemove(child, settings.components)"
+            @select="onSelected(child, $event)"
           ></form-builder-component>
         </template>
         <draggable-empty></draggable-empty>
@@ -33,6 +34,7 @@ import DraggableEmpty from '../DraggableEmpty.vue';
 import FormBuilderComponent from '../FormBuilderComponent.vue';
 import onDndEndMixin from '../../mixins/onDndEnd';
 import onRemoveMixin from '../../mixins/onRemove';
+import { store } from '../../store';
 
 export default Vue.extend({
   name: 'Panel',
@@ -41,6 +43,12 @@ export default Vue.extend({
     FormBuilderComponent
   },
   mixins: [onDndEndMixin, onRemoveMixin],
+  methods: {
+    onSelected(settings: any, definition: any) {
+      store.selectedSettings = settings;
+      store.selectedDefinition = definition;
+    }
+  },
   props: {
     settings: {
       type: Object as PropType<any>,
@@ -57,6 +65,10 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.component__title {
+  margin-left: 16px;
+}
+
 .panel__title {
   display: flex;
   align-items: center;
