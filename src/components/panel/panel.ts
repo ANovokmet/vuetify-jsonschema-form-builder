@@ -1,4 +1,5 @@
 import DefaultOptions from '../common/DefaultOptions.vue';
+import { buildDefaultProps, buildRequiredProp } from '../common/utils';
 import Panel from './Panel.vue';
 
 export default {
@@ -16,10 +17,8 @@ export default {
     buildSchema: (settings: any, parent: any, builder: any) => {
 
         const schema = {
-            type: 'object',
-            title: settings.label,
-            'x-cols': +settings.xCols,
-            properties: {},
+            ...buildDefaultProps(settings),
+            type: 'object'
         };
 
         parent.properties[settings.key] = schema; 
@@ -27,5 +26,7 @@ export default {
         for (const component of settings.components) {
             builder.buildSchema(component, schema);
         }
+        
+        buildRequiredProp(settings, parent);
     }
 };

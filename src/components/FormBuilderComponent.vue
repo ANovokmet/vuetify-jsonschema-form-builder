@@ -1,6 +1,7 @@
 <template>
   <v-col
     class="component"
+    :class="{selected}"
     :cols="settings.xCols"
     @click.stop="$emit('select', componentDefinition)"
   >
@@ -19,6 +20,7 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue';
 import { getComponent } from './components';
+import { store } from '../store';
 
 export default Vue.extend({
   name: 'FormBuilderComponent',
@@ -29,13 +31,13 @@ export default Vue.extend({
     }
   },
   methods: {
-    onClick() {
-      console.log(this.componentDefinition);
-    }
   },
   computed: {
     componentDefinition(): any {
       return getComponent(this.settings.type);
+    },
+    selected(): boolean {
+      return this.settings === store.selectedSettings;
     }
   }
 })
@@ -46,13 +48,19 @@ export default Vue.extend({
   display: flex;
   align-items: center;
 
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 1rem;
   /* border: 1px solid rgba(0, 0, 0, 0.125); */
   /* margin-bottom: 0.5rem; */
 
   background: white;
   border: 1px solid #dfe2e9;
   border-radius: 4px;
+
+  transition: 0.2s ease-in-out background;
+}
+
+.component.selected {
+  background: rgba(80, 83, 222, 0.08);
 }
 
 .component__content {

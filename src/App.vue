@@ -1,19 +1,24 @@
 <template>
   <v-app>
-    <v-app-bar app></v-app-bar>
-
-    <v-main>
-      <v-container>
+    <v-main class="bg-gray">
+      <v-container style="display: flex; flex-direction: column">
         <v-row>
-          <v-col sm="12">
-            <v-form>
+          <v-col cols="12" class="form-preview">
+            <v-form ref="form">
               <v-jsf v-model="model" :schema="schema" />
             </v-form>
+            <v-layout row class="mt-2">
+              <v-spacer></v-spacer>
+              <v-btn color="primary" @click="$refs.form.validate()">Validate</v-btn>
+            </v-layout>
           </v-col>
         </v-row>
 
-        <v-row>
-          <form-builder :schema="schema" @update:schema="schema = $event"></form-builder>
+        <v-row style="flex: 1 0 auto">
+          <form-builder
+            :schema="schema"
+            @update:schema="schema = $event"
+          ></form-builder>
         </v-row>
       </v-container>
     </v-main>
@@ -26,10 +31,6 @@ import VJsf from '@koumoul/vjsf/lib/VJsf.js';
 import '@koumoul/vjsf/lib/VJsf.css';
 import '@koumoul/vjsf/lib/deps/third-party.js';
 import FormBuilder from './components/FormBuilder.vue';
-
-// setInterval(() => {
-//   debugger;
-// }, 5000);
 
 export default {
   name: 'App',
@@ -56,4 +57,13 @@ export default {
 </script>
 
 <style scoped>
+.bg-gray {
+  background: rgb(244, 245, 248);
+}
+
+.form-preview {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
 </style>

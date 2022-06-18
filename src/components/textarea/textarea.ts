@@ -1,5 +1,6 @@
 import DefaultOptions from '../common/DefaultOptions.vue';
 import DefaultField from '../common/DefaultField.vue';
+import { buildDefaultProps, buildRequiredProp } from '../common/utils';
 
 export default {
     title: 'Long text',
@@ -9,15 +10,17 @@ export default {
         key: 'textarea',
         label: 'Long text',
         xCols: 12,
+        required: false,
+        readOnly: false,
     },
     optionsTemplate: DefaultOptions,
     template: DefaultField,
     buildSchema: (settings: any, parent: any) => {
         parent.properties[settings.key] = {
+            ...buildDefaultProps(settings),
             type: 'string',
-            title: settings.label,
             'x-display': "textarea",
-            'x-cols': +settings.xCols
-        }
+        };
+        buildRequiredProp(settings, parent);
     }
 };

@@ -103,3 +103,26 @@ test('oneOf select', () => {
     ]);
 
 });
+
+
+test('required field', () => {
+    const parser = new SchemaParser();
+    parser.visit({
+        type: 'object',
+        required: ['stringField'],
+        properties: {
+            stringField: {
+                type: 'string'
+            }
+        }
+    });
+    const result = parser.config;
+
+    expect(result).toMatchObject([
+        {
+            key: 'stringField',
+            required: true
+        }
+    ]);
+
+});

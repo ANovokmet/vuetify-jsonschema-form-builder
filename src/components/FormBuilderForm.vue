@@ -48,12 +48,10 @@ export default Vue.extend({
   },
 
   methods: {
-    cloneObject(original: any) {
-      return cloneDeep(original.settings);
-    },
     onSelected(settings: any, definition: any) {
       store.selectedSettings = settings;
       store.selectedDefinition = definition;
+      store.onClick = {};
     }
   },
 
@@ -63,16 +61,26 @@ export default Vue.extend({
         this.$emit('update:config', mutableConfig);
       },
       deep: true
-    }
+    },
   },
 
   computed: {
-    selectedDefinition() {
+    selectedDefinition(): any {
       return store.selectedDefinition;
     },
-    selectedSettings() {
+    selectedSettings(): any {
       return store.selectedSettings;
     }
+    // mutableConfig: {
+    //   get(): any {
+    //     return this.config;
+    //   },
+    //   set(value: any) {
+    //     this.$emit('update:config', value);
+    //     console.log('set:value', value)
+    //     // this.config = value;
+    //   }
+    // }
   },
 
   data() {

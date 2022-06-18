@@ -1,20 +1,6 @@
 <template>
   <div>
-    <v-text-field
-      label="API key"
-      v-model="options.key"
-      :messages="['The name of this field in the API endpoint.']"
-    ></v-text-field>
-
-    <v-text-field label="Label" v-model="options.label"></v-text-field>
-
-    <v-text-field
-      label="X-Col"
-      type="number"
-      min="1"
-      max="12"
-      v-model="options.xCols"
-    ></v-text-field>
+    <default-options :options="options"></default-options>
 
     <h4>Values</h4>
     <div class="options">
@@ -23,8 +9,8 @@
         :key="i"
         class="options__option"
       >
-        <v-text-field label="Value" v-model="option.value"></v-text-field>
-        <v-text-field label="Label" v-model="option.label"></v-text-field>
+        <v-text-field label="Value" v-model="option.value" outlined></v-text-field>
+        <v-text-field label="Label" v-model="option.label" outlined></v-text-field>
         <v-btn fab small @click="onRemoveOption(option)">
           <v-icon> mdi-minus </v-icon>
         </v-btn>
@@ -38,9 +24,11 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
+import DefaultOptions from '../common/DefaultOptions.vue';
 
 export default Vue.extend({
-  name: 'DefaultOptions',
+  components: { DefaultOptions },
+  name: 'SelectOptions',
   props: {
     options: {
       type: Object as PropType<any>,

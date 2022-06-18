@@ -47,6 +47,7 @@ export default Vue.extend({
     onSelected(settings: any, definition: any) {
       store.selectedSettings = settings;
       store.selectedDefinition = definition;
+      store.onClick = {};
     }
   },
   props: {

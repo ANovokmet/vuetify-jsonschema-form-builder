@@ -1,15 +1,15 @@
 <template>
   <v-row>
-    <v-col cols="8" style="background: #f4f5f8">
+    <v-col cols="8">
       <div class="form-builder__form-container">
         <form-builder-form :config.sync="config"></form-builder-form>
       </div>
     </v-col>
-    <v-col cols="4" style="padding: 0">
+    <v-col cols="4" class="form-builder__tabs">
       <v-tabs v-model="tab" grow>
-        <v-tab><v-icon>extension</v-icon></v-tab>
-        <v-tab><v-icon>format_list_bulleted</v-icon></v-tab>
-        <v-tab><v-icon>code</v-icon></v-tab>
+        <v-tab :key="1"><v-icon>extension</v-icon></v-tab>
+        <v-tab :key="2"><v-icon>format_list_bulleted</v-icon></v-tab>
+        <v-tab :key="3"><v-icon>code</v-icon></v-tab>
       </v-tabs>
       <v-tabs-items v-model="tab">
         <v-tab-item class="form-builder__components">
@@ -31,7 +31,6 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue';
 import "../assets/global.css";
-import { cloneDeep } from 'lodash-es';
 
 import FormBuilderForm from './FormBuilderForm.vue';
 import FormBuilderOptions from './FormBuilderOptions.vue';
@@ -71,41 +70,10 @@ export default Vue.extend({
     }
   },
 
-  methods: {
-    cloneObject(original: any) {
-      return cloneDeep(original.settings);
-    },
-    onSelected(settings: any, definition: any) {
-      store.selectedSettings = settings;
-      store.selectedDefinition = definition;
-    }
-  },
-
-  created() {
-    const parser = new SchemaParser();
-    parser.visit(this.schema);
-    this.config = parser.config;
-  },
-
   watch: {
-    schema: {
-      handler(schema) {
-        const parser = new SchemaParser();
-        parser.visit(schema);
-        console.log('parser config', parser.config);
-        // this.config = parser.config;
-      },
-      immediate: true
-    },
-
-    config: {
-      handler(config) {
-        const builder = new SchemaBuilder(components);
-        console.log('builder config', config)
-        const schema = builder.build(config);
-        this.$emit('update:schema', schema);
-      },
-      deep: true
+    onComponentClick() {
+      console.log('test')
+      this.tab = 1;
     }
   },
 
@@ -115,13 +83,27 @@ export default Vue.extend({
     },
     selectedSettings() {
       return store.selectedSettings;
+    },
+    onComponentClick(): any {
+      return store.onClick;
+    },
+    config: {
+      get(): any {
+        const parser = new SchemaParser();
+        parser.visit(this.schema);
+        return parser.config;
+      },
+      set(value: any) {
+        const builder = new SchemaBuilder(components);
+        const schema = builder.build(value);
+        this.$emit('update:schema', schema);
+      }
     }
   },
 
   data() {
     return {
-      tab: {},
-      config: [],
+      tab: 0,
       components: Object.values(components)
     }
   },
@@ -129,6 +111,10 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.form-builder__tabs {
+  /* box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15); */
+}
+
 .form-builder__form-container {
 }
 
