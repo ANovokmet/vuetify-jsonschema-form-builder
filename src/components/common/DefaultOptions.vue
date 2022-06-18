@@ -15,6 +15,27 @@
         <v-text-field outlined type="number" min="1" max="12" v-model="options.xCols"></v-text-field>
       </template>
     </v-slider>
+
+    <h4>Padding</h4>
+    <div class="padding-control">
+      <v-row>
+        <v-col cols="4" class="padding-control__col">
+          <div>
+            <v-text-field outlined type="number" min="0" max="16" label="Left" v-model="options.padding.left"></v-text-field>
+          </div>
+        </v-col>
+        <v-col cols="4" class="padding-control__col">
+              <v-text-field outlined type="number" min="0" max="16" label="Top" v-model="options.padding.top"></v-text-field>
+              <v-text-field outlined type="number" min="0" max="16" label="Bottom" v-model="options.padding.bottom"></v-text-field>
+        </v-col>
+        <v-col cols="4" class="padding-control__col">
+          <div>
+            <v-text-field outlined type="number" min="0" max="16" label="Right" v-model="options.padding.right"></v-text-field>
+          </div>
+        </v-col>
+      </v-row>
+
+    </div>
   </div>
 </template>
 
@@ -39,4 +60,14 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.padding-control {
+
+}
+
+.padding-control__col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 </style>

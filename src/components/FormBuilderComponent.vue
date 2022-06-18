@@ -1,10 +1,12 @@
 <template>
   <v-col
-    class="component"
-    :class="{selected}"
     :cols="settings.xCols"
+    :style="paddingStyle"
+    class="component-wrapper"
     @click.stop="$emit('select', componentDefinition)"
   >
+  <div class="component"
+    :class="{selected}">
     <component
       class="component__content"
       :is="componentDefinition.template"
@@ -14,6 +16,7 @@
     <v-btn icon @click.stop="$emit('remove', settings)">
       <v-icon>close</v-icon>
     </v-btn>
+  </div>
   </v-col>
 </template>
 
@@ -38,12 +41,29 @@ export default Vue.extend({
     },
     selected(): boolean {
       return this.settings === store.selectedSettings;
+    },
+    paddingStyle(): any {
+      const style: any = {};
+      const settings = this.settings;
+      function setPadding(location: string) {
+        if(settings.padding[location]) {
+          style[`padding-${location}`] = `${settings.padding[location] * 4}px`;
+        }
+      }
+      setPadding('top');
+      setPadding('bottom');
+      setPadding('left');
+      setPadding('right');
+      return style;
     }
   }
 })
 </script>
 
 <style scoped>
+.component-wrapper {
+  padding: 0;
+}
 .component {
   display: flex;
   align-items: center;

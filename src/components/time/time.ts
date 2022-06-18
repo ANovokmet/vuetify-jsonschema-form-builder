@@ -1,6 +1,6 @@
 import DefaultOptions from '../common/DefaultOptions.vue';
 import DefaultField from '../common/DefaultField.vue';
-import { buildDefaultProps, buildRequiredProp } from '../common/utils';
+import { buildDefaultProps, buildPadding, buildRequiredProp } from '../common/utils';
 
 export default {
     title: 'Time',
@@ -12,6 +12,7 @@ export default {
         xCols: 12,
         required: false,
         readOnly: false,
+        padding: {},
     },
     optionsTemplate: DefaultOptions,
     template: DefaultField,
@@ -22,5 +23,6 @@ export default {
             format: 'time',
         }
         buildRequiredProp(settings, parent);
+        buildPadding(settings, parent.properties[settings.key]);
     }
 };

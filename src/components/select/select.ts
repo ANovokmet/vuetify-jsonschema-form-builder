@@ -1,6 +1,6 @@
 import SelectOptions from './SelectOptions.vue';
 import DefaultField from '../common/DefaultField.vue';
-import { buildDefaultProps, buildRequiredProp } from '../common/utils';
+import { buildDefaultProps, buildPadding, buildRequiredProp } from '../common/utils';
 
 export default {
     title: 'Dropdown',
@@ -12,6 +12,7 @@ export default {
         xCols: 12,
         required: false,
         readOnly: false,
+        padding: {},
         values: []
     },
     optionsTemplate: SelectOptions,
@@ -26,5 +27,6 @@ export default {
             }))
         }
         buildRequiredProp(settings, parent);
+        buildPadding(settings, parent.properties[settings.key]);
     }
 };

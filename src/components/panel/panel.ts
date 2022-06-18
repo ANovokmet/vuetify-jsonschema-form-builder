@@ -1,5 +1,5 @@
 import DefaultOptions from '../common/DefaultOptions.vue';
-import { buildDefaultProps, buildRequiredProp } from '../common/utils';
+import { buildDefaultProps, buildPadding, buildRequiredProp } from '../common/utils';
 import Panel from './Panel.vue';
 
 export default {
@@ -10,7 +10,8 @@ export default {
         key: 'panel',
         label: 'Panel',
         xCols: 12,
-        components: []
+        components: [],
+        padding: {}
     },
     optionsTemplate: DefaultOptions,
     template: Panel,
@@ -28,5 +29,6 @@ export default {
         }
         
         buildRequiredProp(settings, parent);
+        buildPadding(settings, parent.properties[settings.key]);
     }
 };

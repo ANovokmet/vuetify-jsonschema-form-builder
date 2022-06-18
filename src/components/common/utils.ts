@@ -6,6 +6,14 @@ export interface ISettings {
     tooltip?: string;
     required?: boolean;
     readOnly?: boolean;
+    padding?: IPadding
+}
+
+interface IPadding {
+    top?: number;
+    bottom?: number;
+    left?: number;
+    right?: number;
 }
 
 export interface IJsonSchema {
@@ -28,5 +36,24 @@ export function buildRequiredProp(settings: ISettings, parent: IJsonSchema) {
             parent.required = [];
         }
         parent.required.push(settings.key);
+    }
+}
+
+export function buildPadding(settings: ISettings, properties: any) {
+    
+    function setPadding(location: keyof IPadding) {
+        if(settings.padding && settings.padding[location] != null) {
+            if(!properties['x-class']){
+                properties['x-class'] = '';
+            }
+            properties['x-class'] += ` p${location[0]}-${settings.padding[location]}`;
+        }
+    }
+
+    if(settings.padding) {
+        setPadding('top');
+        setPadding('bottom');
+        setPadding('left');
+        setPadding('right');
     }
 }

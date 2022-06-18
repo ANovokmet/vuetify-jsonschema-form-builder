@@ -51,8 +51,21 @@ export class SchemaParser {
             defaultValue: property.default,
             tooltip: property.description,
             required: parent.required && parent.required.includes(key),
-            readOnly: property.readOnly
+            readOnly: property.readOnly,
+            padding: {} as any
         };
+
+        if(property['x-class']) {
+            // pl-0 pt-0 pb-0 pr-0
+            const match = /\b(pl-(?<left>[0-9]+)|pt-(?<top>[0-9]+)|pb-(?<bottom>[0-9]+)|pr-(?<right>[0-9]+))\b/.exec(property['x-class']);
+            if(match?.groups) {
+                const { left, top, bottom, right } = match.groups;
+                defaultProps.padding.left = left;
+                defaultProps.padding.top = top;
+                defaultProps.padding.right = right;
+                defaultProps.padding.bottom = bottom;
+            }
+        }
 
         if (property.format === 'date') {
             config.push({
