@@ -55,15 +55,26 @@ export class SchemaParser {
             padding: {} as any
         };
 
-        if(property['x-class']) {
+        if (property['x-class']) {
             // pl-0 pt-0 pb-0 pr-0
-            const match = /\b(pl-(?<left>[0-9]+)|pt-(?<top>[0-9]+)|pb-(?<bottom>[0-9]+)|pr-(?<right>[0-9]+))\b/.exec(property['x-class']);
-            if(match?.groups) {
-                const { left, top, bottom, right } = match.groups;
-                defaultProps.padding.left = left;
-                defaultProps.padding.top = top;
-                defaultProps.padding.right = right;
-                defaultProps.padding.bottom = bottom;
+            const regexp = /\b(pl-(?<left>[0-9]+)|pt-(?<top>[0-9]+)|pb-(?<bottom>[0-9]+)|pr-(?<right>[0-9]+))\b/g;
+            let match;
+            while ((match = regexp.exec(property['x-class'])) != null) {
+                if (match?.groups) {
+                    const { left, top, bottom, right } = match.groups;
+                    if (left) {
+                        defaultProps.padding.left = +left;
+                    }
+                    if (top) {
+                        defaultProps.padding.top = +top;
+                    }
+                    if (right) {
+                        defaultProps.padding.right = +right;
+                    }
+                    if (bottom) {
+                        defaultProps.padding.bottom = +bottom;
+                    }
+                }
             }
         }
 

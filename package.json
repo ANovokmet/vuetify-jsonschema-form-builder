@@ -12,6 +12,7 @@
     "@koumoul/vjsf": "^2.13.1",
     "core-js": "^3.6.5",
     "lodash-es": "^4.17.21",
+    "v-jsoneditor": "^1.4.5",
     "vue": "^2.6.11",
     "vuedraggable": "^2.24.3",
     "vuetify": "^2.6.0"

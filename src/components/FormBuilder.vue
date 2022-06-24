@@ -19,9 +19,10 @@
           <form-builder-options></form-builder-options>
         </v-tab-item>
         <v-tab-item>
-          <pre>
+          <!-- <pre>
             {{ schema }}
-          </pre>
+          </pre> -->
+          <form-builder-json :schema.sync="schema2"></form-builder-json>
         </v-tab-item>
       </v-tabs-items>
     </v-col>
@@ -35,6 +36,7 @@ import "../assets/global.css";
 import FormBuilderForm from './FormBuilderForm.vue';
 import FormBuilderOptions from './FormBuilderOptions.vue';
 import FormBuilderComponents from './FormBuilderComponents.vue';
+import FormBuilderJson from './FormBuilderJson.vue';
 import { SchemaBuilder } from './schema-builder';
 import { SchemaParser } from './schema-parser';
 
@@ -60,7 +62,8 @@ export default Vue.extend({
   components: {
     FormBuilderForm,
     FormBuilderOptions,
-    FormBuilderComponents
+    FormBuilderComponents,
+    FormBuilderJson
   },
 
   props: {
@@ -90,13 +93,23 @@ export default Vue.extend({
     config: {
       get(): any {
         const parser = new SchemaParser();
-        parser.visit(this.schema);
+        parser.visit(this.schema2);
         return parser.config;
       },
       set(value: any) {
         const builder = new SchemaBuilder(components);
+        console.log('shcema2')
         const schema = builder.build(value);
         this.$emit('update:schema', schema);
+      }
+    },
+    schema2: {
+      get(): any {
+        return this.schema;
+      },
+      set(value: any) {
+        this.config = [...this.config];
+        this.$emit('update:schema', value);
       }
     }
   },

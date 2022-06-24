@@ -126,3 +126,30 @@ test('required field', () => {
     ]);
 
 });
+
+test('paddings', () => {
+    const parser = new SchemaParser();
+    parser.visit({
+        type: 'object',
+        properties: {
+            stringField: {
+                type: 'string',
+                'x-class': 'pr-4 pt-5 pb-3 pl-2'
+            }
+        }
+    });
+    const result = parser.config;
+
+    expect(result).toMatchObject([
+        {
+            key: 'stringField',
+            padding: {
+                top: 5,
+                right: 4,
+                bottom: 3,
+                left: 2
+            }
+        }
+    ]);
+
+});
