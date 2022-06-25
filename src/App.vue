@@ -9,16 +9,22 @@
             </v-form>
             <v-layout row class="mt-2">
               <v-spacer></v-spacer>
-              <v-btn color="primary" @click="$refs.form.validate()">Validate</v-btn>
+              <v-btn color="primary" @click="$refs.form.validate()">
+                Validate
+              </v-btn>
             </v-layout>
           </v-col>
         </v-row>
 
         <v-row style="flex: 1 0 auto">
-          <form-builder
-            :schema="schema"
-            @update:schema="schema = $event"
-          ></form-builder>
+          <v-col cols="8">
+            <div class="form-builder__form-container">
+              <form-builder :schema.sync="schema"></form-builder>
+            </div>
+          </v-col>
+          <v-col cols="4" class="form-builder__tabs">
+            <form-builder-tabs :schema.sync="schema"></form-builder-tabs>
+          </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -31,10 +37,15 @@ import VJsf from '@koumoul/vjsf/lib/VJsf.js';
 import '@koumoul/vjsf/lib/VJsf.css';
 import '@koumoul/vjsf/lib/deps/third-party.js';
 import FormBuilder from './components/FormBuilder.vue';
+import FormBuilderTabs from './components/FormBuilderTabs.vue';
 
 export default {
   name: 'App',
-  components: { VJsf, FormBuilder },
+  components: {
+    VJsf,
+    FormBuilder,
+    FormBuilderTabs
+  },
 
   data() {
     return {

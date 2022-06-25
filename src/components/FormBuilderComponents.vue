@@ -21,8 +21,6 @@ import draggable from 'vuedraggable';
 import { cloneDeep } from 'lodash-es';
 import { components } from './components';
 
-import { store } from '../store';
-
 export default Vue.extend({
   name: 'FormBuilderComponents',
   components: {
@@ -32,15 +30,6 @@ export default Vue.extend({
   methods: {
     cloneObject(original: any) {
       return cloneDeep(original.settings);
-    }
-  },
-
-  computed: {
-    selectedDefinition() {
-      return store.selectedDefinition;
-    },
-    selectedSettings() {
-      return store.selectedSettings;
     }
   },
 

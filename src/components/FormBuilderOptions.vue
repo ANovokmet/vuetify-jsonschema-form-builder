@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
-import { store } from '../store';
+import { store } from './store';
 
 export default Vue.extend({
   name: 'FormBuilderOptions',

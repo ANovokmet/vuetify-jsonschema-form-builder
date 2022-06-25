@@ -32,9 +32,9 @@
 import Vue, { PropType } from 'vue';
 import DraggableEmpty from '../DraggableEmpty.vue';
 import FormBuilderComponent from '../FormBuilderComponent.vue';
-import onDndEndMixin from '../../mixins/onDndEnd';
-import onRemoveMixin from '../../mixins/onRemove';
-import { store } from '../../store';
+import onDndEndMixin from '../mixins/onDndEnd';
+import onRemoveMixin from '../mixins/onRemove';
+import { store } from '../store';
 
 export default Vue.extend({
   name: 'Panel',

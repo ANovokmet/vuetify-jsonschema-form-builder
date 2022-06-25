@@ -28,10 +28,10 @@ import { cloneDeep } from 'lodash-es';
 
 import FormBuilderComponent from './FormBuilderComponent.vue';
 import DraggableEmpty from './DraggableEmpty.vue';
-import onDndEndMixin from '../mixins/onDndEnd';
-import onRemoveMixin from '../mixins/onRemove';
+import onDndEndMixin from './mixins/onDndEnd';
+import onRemoveMixin from './mixins/onRemove';
 
-import { store } from '../store';
+import { store } from './store';
 
 
 export default Vue.extend({
@@ -65,12 +65,6 @@ export default Vue.extend({
   },
 
   computed: {
-    selectedDefinition(): any {
-      return store.selectedDefinition;
-    },
-    selectedSettings(): any {
-      return store.selectedSettings;
-    }
     // mutableConfig: {
     //   get(): any {
     //     return this.config;
