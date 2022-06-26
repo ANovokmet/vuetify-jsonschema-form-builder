@@ -11,19 +11,22 @@ npm install vuetify-jsonschema-form-builder
 
 ```js
 <template>
-    <v-row>
-        <v-col cols="8">
-            <form-builder :schema.sync="schema"></form-builder>
-        </v-col>
-        <v-col cols="4">
-            <form-builder-tabs :schema.sync="schema"></form-builder-tabs>
-        </v-col>
-    </v-row>
+    <v-app>
+        <v-row>
+            <v-col cols="8">
+                <form-builder :schema.sync="schema"></form-builder>
+            </v-col>
+            <v-col cols="4">
+                <form-builder-tabs :schema.sync="schema"></form-builder-tabs>
+            </v-col>
+        </v-row>
+    </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { FormBuilder, FormBuilderTabs } from 'vuetify-jsonschema-form-builder';
+import 'vuetify/dist/vuetify.min.css';
 
 export default Vue.extend({
   name: "App",

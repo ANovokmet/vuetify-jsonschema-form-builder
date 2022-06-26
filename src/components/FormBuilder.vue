@@ -5,6 +5,7 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue';
 import "../assets/global.css";
+import Vuetify from 'vuetify';
 
 import FormBuilderForm from './FormBuilderForm.vue';
 import { SchemaBuilder } from './schema-builder';
@@ -25,6 +26,8 @@ registerComponent('date', dateComponent);
 registerComponent('time', timeComponent);
 registerComponent('select', selectComponent);
 // registerComponent('panel', panelComponent);
+
+Vue.use(Vuetify);
 
 export default Vue.extend({
   name: 'FormBuilder',

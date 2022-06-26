@@ -46,8 +46,8 @@ export class SchemaParser {
 
         const defaultProps = {
             key: key,
-            label: property.title ?? key,
-            xCols: property['x-cols'] ?? 12,
+            label: property.title || key,
+            xCols: property['x-cols'] !== undefined ? property['x-cols'] : 12,
             defaultValue: property.default,
             tooltip: property.description,
             required: parent.required && parent.required.includes(key),
@@ -60,7 +60,7 @@ export class SchemaParser {
             const regexp = /\b(pl-(?<left>[0-9]+)|pt-(?<top>[0-9]+)|pb-(?<bottom>[0-9]+)|pr-(?<right>[0-9]+))\b/g;
             let match;
             while ((match = regexp.exec(property['x-class'])) != null) {
-                if (match?.groups) {
+                if (match && match.groups) {
                     const { left, top, bottom, right } = match.groups;
                     if (left) {
                         defaultProps.padding.left = +left;
@@ -115,8 +115,8 @@ export class SchemaParser {
         config.push({
             type: 'panel',
             key: key,
-            label: property.title ?? key,
-            xCols: property['x-cols'] ?? 12,
+            label: property.title || key,
+            xCols: property['x-cols'] !== undefined ? property['x-cols'] : 12,
             components
         });
 
