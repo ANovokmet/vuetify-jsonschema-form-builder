@@ -1,5 +1,6 @@
 import DefaultOptions from '../common/DefaultOptions.vue';
 import { buildDefaultProps, buildPadding, buildRequiredProp } from '../common/utils';
+import { SchemaBuilder } from '../schema-builder';
 import Panel from './Panel.vue';
 
 export default {
@@ -15,7 +16,7 @@ export default {
     },
     optionsTemplate: DefaultOptions,
     template: Panel,
-    buildSchema: (settings: any, parent: any, builder: any) => {
+    buildSchema: (settings: any, parent: any, builder: SchemaBuilder) => {
 
         const schema = {
             ...buildDefaultProps(settings),

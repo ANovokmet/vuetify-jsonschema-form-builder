@@ -1,4 +1,7 @@
-import { IJsonSchema } from "./common/utils";
+import { IJsonSchema, ISettings } from "./common/utils";
+import { ISelectSettings } from "./select/select";
+
+type Settings = ISettings | ISelectSettings;
 
 export class SchemaParser {
     //   {
@@ -42,18 +45,18 @@ export class SchemaParser {
         }
     }
 
-    visitStringProperty(property: any, key: string, config: any[], parent: IJsonSchema) {
+    visitStringProperty(property: any, key: string, config: Settings[], parent: IJsonSchema) {
 
-        const defaultProps = {
+        const defaultProps: Partial<ISettings> = {
             key: key,
             label: property.title || key,
             xCols: property['x-cols'] !== undefined ? property['x-cols'] : 12,
             defaultValue: property.default,
             tooltip: property.description,
             required: parent.required && parent.required.includes(key),
-            readOnly: property.readOnly,
-            padding: {} as any
+            readOnly: property.readOnly
         };
+        defaultProps.padding = {};
 
         if (property['x-class']) {
             // pl-0 pt-0 pb-0 pr-0
@@ -82,31 +85,39 @@ export class SchemaParser {
             config.push({
                 ...defaultProps,
                 type: 'date',
-            });
+            } as ISettings);
         } else if (property.format === 'time') {
             config.push({
                 ...defaultProps,
                 type: 'time',
-            });
+            } as ISettings);
         } else if (property['x-display'] === 'textarea') {
             config.push({
                 ...defaultProps,
                 type: 'textarea',
-            });
+            } as ISettings);
         } else if (property.oneOf) {
             config.push({
                 ...defaultProps,
                 type: 'select',
+                source: 'values',
                 values: property.oneOf.map((item: any) => ({
                     value: item.const,
                     label: item.title
                 }))
-            })
+            } as ISelectSettings);
+        } else if (property['x-predefinedSelectId']) {
+            config.push({
+                ...defaultProps,
+                type: 'select',
+                source: 'predefined',
+                predefinedSelectId: property['x-predefinedSelectId']
+            } as ISelectSettings);
         } else {
             config.push({
                 ...defaultProps,
                 type: 'textfield'
-            });
+            } as ISettings);
         }
     }
 

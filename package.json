@@ -1,6 +1,6 @@
 {
   "name": "vuetify-jsonschema-form-builder",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "private": true,
   "types": "index.d.ts",
   "main": "VuetifyJsonschemaFormBuilder.js",
@@ -34,6 +34,7 @@
     "@vue/cli-service": "~4.5.15",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
+    "axios": "^0.27.2",
     "babel-jest": "^28.1.0",
     "core-js": "^3.6.5",
     "eslint": "^6.7.2",

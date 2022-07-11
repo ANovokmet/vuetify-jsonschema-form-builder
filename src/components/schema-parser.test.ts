@@ -89,6 +89,7 @@ test('oneOf select', () => {
         {
             key: 'stringOneOf',
             type: 'select',
+            source: 'values',
             values: [
                 {
                     value: 'value1',
@@ -99,6 +100,30 @@ test('oneOf select', () => {
                     label: 'Value 2'
                 }
             ]
+        }
+    ]);
+
+});
+
+test('predefined select', () => {
+    const parser = new SchemaParser();
+    parser.visit({
+        type: 'object',
+        properties: {
+            stringPredefined: {
+                type: 'string',
+                'x-predefinedSelectId': '1234'
+            }
+        }
+    });
+    const result = parser.config;
+
+    expect(result).toMatchObject([
+        {
+            key: 'stringPredefined',
+            type: 'select',
+            source: 'predefined',
+            predefinedSelectId: '1234'
         }
     ]);
 

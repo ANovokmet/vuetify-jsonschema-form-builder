@@ -7,16 +7,23 @@
   <component
     :is="selectedDefinition.optionsTemplate"
     :options="selectedSettings"
+    :context="context"
   ></component>
   </div>
 </template>
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
+import { IFormBuilderContext } from './interfaces';
 import { store } from './store';
 
 export default Vue.extend({
   name: 'FormBuilderOptions',
+  props: {
+    context: {
+      type: Object as PropType<IFormBuilderContext>
+    }
+  },
   computed: {
     selectedDefinition() {
       return store.selectedDefinition;

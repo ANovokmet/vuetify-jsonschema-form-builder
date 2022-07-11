@@ -10,7 +10,7 @@
         <form-builder-components></form-builder-components>
       </v-tab-item>
       <v-tab-item class="form-builder__options">
-        <form-builder-options></form-builder-options>
+        <form-builder-options :context="context"></form-builder-options>
       </v-tab-item>
       <v-tab-item class="form-builder__json">
         <form-builder-json :schema.sync="model"></form-builder-json>
@@ -25,6 +25,7 @@ import FormBuilderComponents from './FormBuilderComponents.vue';
 import FormBuilderOptions from './FormBuilderOptions.vue';
 import FormBuilderJson from './FormBuilderJson.vue';
 import { store } from '@/components/store';
+import { IFormBuilderContext } from './interfaces';
 
 export default Vue.extend({
   name: 'FormBuilderTabs',
@@ -39,6 +40,9 @@ export default Vue.extend({
     schema: {
       type: Object as PropType<any>,
       required: true,
+    },
+    context: {
+      type: Object as PropType<IFormBuilderContext>
     }
   },
 

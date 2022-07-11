@@ -14,10 +14,10 @@ npm install vuetify-jsonschema-form-builder
     <v-app>
         <v-row>
             <v-col cols="8">
-                <form-builder :schema.sync="schema"></form-builder>
+                <form-builder :schema.sync="schema" :context="context"></form-builder>
             </v-col>
             <v-col cols="4">
-                <form-builder-tabs :schema.sync="schema"></form-builder-tabs>
+                <form-builder-tabs :schema.sync="schema" :context="context"></form-builder-tabs>
             </v-col>
         </v-row>
     </v-app>
@@ -46,6 +46,25 @@ export default Vue.extend({
             'x-display': 'color-picker'
           },
         }
+      },
+      context: {
+        predefinedSelects: [
+          {
+            id: 'pokemon',
+            label: 'Pokemon',
+            url: 'https://pokeapi.co/api/v2/pokemon',
+            itemsProp: 'results',
+            itemTitle: 'name',
+            itemKey: 'name',
+          },
+          {
+            id: 'fruit',
+            label: 'Fruit',
+            url: 'https://www.fruityvice.com/api/fruit/all',
+            itemTitle: 'name',
+            itemKey: 'id'
+          }
+        ]
       }
     };
   },
@@ -56,6 +75,14 @@ export default Vue.extend({
 ### Props
 
 - `schema` - a jsonschema in the format of `vuetify-jsonschema-form` schemas
+- `context` - an object containing additional data for generating the form
+  - `predefinedSelects` - list of predefined selects that can be chosen for the dropdown component
+    - `id` - unique ID of the predefined dropdown
+    - `label` - display label
+    - `url` - URL to fetch the values from
+    - `itemsProp` - property in the response containing the dropdown options
+    - `itemTitle` - property of the option to use as the display label
+    - `itemKey` - property of the option to use as the display value
 
 ### How it works
 

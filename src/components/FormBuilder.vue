@@ -19,6 +19,7 @@ import dateComponent from './date/date';
 import textareaComponent from './textarea/textarea';
 import timeComponent from './time/time';
 import selectComponent from './select/select';
+import { IFormBuilderContext } from './interfaces';
 
 registerComponent('textfield', textfieldComponent);
 registerComponent('textarea', textareaComponent);
@@ -39,6 +40,9 @@ export default Vue.extend({
     schema: {
       type: Object as PropType<any>,
       required: true,
+    },
+    context: {
+      type: Object as PropType<IFormBuilderContext>
     }
   },
 
@@ -51,7 +55,7 @@ export default Vue.extend({
         return parser.config;
       },
       set(value: any) {
-        const builder = new SchemaBuilder(components);
+        const builder = new SchemaBuilder(components, this.context);
         const schema = builder.build(value);
         this.$emit('update:schema', schema);
       }

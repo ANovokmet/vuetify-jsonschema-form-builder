@@ -1,9 +1,12 @@
+import { IFormBuilderContext } from "./interfaces";
 
 export class SchemaBuilder {
     components: { [type: string]: any; };
+    context: IFormBuilderContext;
 
-    constructor(components: { [type: string]: any }) {
+    constructor(components: { [type: string]: any }, context: IFormBuilderContext) {
         this.components = components;
+        this.context = context || {};
     }
 
     build(config: any) {
@@ -13,7 +16,6 @@ export class SchemaBuilder {
             properties: {}
         }
 
-        console.log("iterating...", config);
         for (const settings of config) {
             this.buildSchema(settings, schema);
         }

@@ -1,7 +1,8 @@
 export interface ISettings {
+    type: string;
     key: string;
     label?: string;
-    xCols: string;
+    xCols: number;
     defaultValue?: string;
     tooltip?: string;
     required?: boolean;
@@ -17,10 +18,22 @@ interface IPadding {
 }
 
 export interface IJsonSchema {
+    type: 'object';
     required?: string[];
+    properties: { [property: string]: IJsonSchemaProperty }
 }
 
-export function buildDefaultProps(settings: ISettings) {
+export interface IJsonSchemaProperty {
+    type: string;
+    title?: string;
+    description?: string;
+    'x-cols'?: number;
+    'x-class'?: string;
+    default?: any;
+    readOnly?: boolean;
+}
+
+export function buildDefaultProps(settings: ISettings): Partial<IJsonSchemaProperty> {
     return {
         title: settings.label,
         'x-cols': +settings.xCols,
@@ -39,7 +52,7 @@ export function buildRequiredProp(settings: ISettings, parent: IJsonSchema) {
     }
 }
 
-export function buildPadding(settings: ISettings, properties: any) {
+export function buildPadding(settings: ISettings, properties: IJsonSchemaProperty) {
     
     function setPadding(location: keyof IPadding) {
         if(settings.padding && settings.padding[location] != null) {
